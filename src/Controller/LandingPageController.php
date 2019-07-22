@@ -33,4 +33,31 @@ class LandingPageController extends Controller
 
         ]);
     }
+
+
+    /**
+     * @Route("/test", name="OrderType_new", methods={"GET","POST"})
+     */
+    public function new(Request $request): Response
+    {
+       
+        $form = $this->createForm(OrderType::class);
+        $form->handleRequest($request);
+
+       /*  if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($orderType);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('OrderType_index');
+        } */
+
+        return $this->render('OrderType/new.html.twig', [
+           
+            'form' => $form->createView(),
+        ]);
+    
+}
+
+
 }
