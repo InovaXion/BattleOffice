@@ -82,14 +82,14 @@ class Clientdeliveryaddress
      *
      * @ORM\Column(name="createdAt", type="datetime", nullable=true, options={"default"="NULL"})
      */
-    private $createdat;
+    private $createdat = 'NULL';
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="updatedAt", type="datetime", nullable=true, options={"default"="NULL"})
      */
-    private $updatedat;
+    private $updatedat = 'NULL';
 
     /**
      * @var \Client

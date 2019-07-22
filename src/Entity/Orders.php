@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Orders
  *
- * @ORM\Table(name="orders", indexes={@ORM\Index(name="product_id", columns={"product_id"}), @ORM\Index(name="client_id", columns={"client_id"})})
+ * @ORM\Table(name="orders", indexes={@ORM\Index(name="clientDeliveryAddress", columns={"clientDeliveryAddress"}), @ORM\Index(name="product_id", columns={"product_id"}), @ORM\Index(name="client_id", columns={"client_id"})})
  * @ORM\Entity
  */
 class Orders
@@ -26,14 +26,21 @@ class Orders
      *
      * @ORM\Column(name="createdAt", type="datetime", nullable=true, options={"default"="NULL"})
      */
-    private $createdat;
+    private $createdat = 'NULL';
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="updatedAt", type="datetime", nullable=true, options={"default"="NULL"})
      */
-    private $updatedat;
+    private $updatedat = 'NULL';
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="status", type="string", length=255, nullable=true, options={"default"="NULL"})
+     */
+    private $status = 'NULL';
 
     /**
      * @var \Client
@@ -54,6 +61,16 @@ class Orders
      * })
      */
     private $product;
+
+    /**
+     * @var \Clientdeliveryaddress
+     *
+     * @ORM\ManyToOne(targetEntity="Clientdeliveryaddress")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="clientDeliveryAddress", referencedColumnName="id")
+     * })
+     */
+    private $clientdeliveryaddress;
 
     public function getId(): ?int
     {
@@ -84,6 +101,18 @@ class Orders
         return $this;
     }
 
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
     public function getClient(): ?Client
     {
         return $this->client;
@@ -104,6 +133,18 @@ class Orders
     public function setProduct(?Product $product): self
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getClientdeliveryaddress(): ?Clientdeliveryaddress
+    {
+        return $this->clientdeliveryaddress;
+    }
+
+    public function setClientdeliveryaddress(?Clientdeliveryaddress $clientdeliveryaddress): self
+    {
+        $this->clientdeliveryaddress = $clientdeliveryaddress;
 
         return $this;
     }

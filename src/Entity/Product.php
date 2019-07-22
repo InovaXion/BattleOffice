@@ -40,14 +40,14 @@ class Product
      *
      * @ORM\Column(name="realPrice", type="integer", nullable=true, options={"default"="NULL"})
      */
-    private $realprice;
+    private $realprice = 'NULL';
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="stock", type="integer", nullable=true, options={"default"="NULL"})
      */
-    private $stock;
+    private $stock = 'NULL';
 
     public function getId(): ?int
     {
