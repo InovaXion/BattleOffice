@@ -2,12 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\Clientdeliveryaddress;
+use App\Entity\Client;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AddressType extends AbstractType
+class ClientType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -20,16 +20,16 @@ class AddressType extends AbstractType
             ->add('postalcode')
             ->add('country')
             ->add('phonenumber')
+            ->add('email')
             // ->add('createdat')
-            // ->add('updatedat')
-            // ->add('client')
+            // ->add('apdatedat')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Clientdeliveryaddress::class,
+            'data_class' => Client::class,
         ]);
     }
 }

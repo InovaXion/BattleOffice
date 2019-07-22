@@ -2,13 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
+use App\Entity\Orders;
+use App\Entity\Product;
 use App\Form\OrderType;
 use App\Manager\OrderManager;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
+use App\Entity\Clientdeliveryaddress;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class LandingPageController extends Controller
 {
@@ -40,19 +44,24 @@ class LandingPageController extends Controller
      */
     public function new(Request $request): Response
     {
-       
+       $client = New Client;
+       $clientAddress = New Clientdeliveryaddress;
+       $order = New Orders;
+       $product = New Product;
+
+
         $form = $this->createForm(OrderType::class);
         $form->handleRequest($request);
 
-       /*  if ($form->isSubmitted() && $form->isValid()) {
+       if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($orderType);
+            $entityManager->persist($client, $clientAddress, $product, $order);
             $entityManager->flush();
 
-            return $this->redirectToRoute('OrderType_index');
-        } */
+            return $this->redirectToRoute('confirmation');
+        } 
 
-        return $this->render('OrderType/new.html.twig', [
+        return $this->render('landing_page/test.html.twig', [
            
             'form' => $form->createView(),
         ]);
