@@ -26,14 +26,14 @@ class Orders
      *
      * @ORM\Column(name="createdAt", type="datetime", nullable=true, options={"default"="NULL"})
      */
-    private $createdat = 'NULL';
+    private $createdat;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="updatedAt", type="datetime", nullable=true, options={"default"="NULL"})
      */
-    private $updatedat = 'NULL';
+    private $updatedat;
 
     /**
      * @var \Client

@@ -89,14 +89,14 @@ class Client
      *
      * @ORM\Column(name="createdAt", type="datetime", nullable=true, options={"default"="NULL"})
      */
-    private $createdat = 'NULL';
+    private $createdat;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="apdatedAt", type="datetime", nullable=true, options={"default"="NULL"})
      */
-    private $apdatedat = 'NULL';
+    private $apdatedat;
 
     public function getId(): ?int
     {
