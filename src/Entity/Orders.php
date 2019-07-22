@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Orders
  *
- * @ORM\Table(name="orders", indexes={@ORM\Index(name="clientDeliveryAddress", columns={"clientDeliveryAddress"}), @ORM\Index(name="product_id", columns={"product_id"}), @ORM\Index(name="client_id", columns={"client_id"})})
+ * @ORM\Table(name="orders", indexes={@ORM\Index(name="product_id", columns={"product_id"}), @ORM\Index(name="client_id", columns={"client_id"}), @ORM\Index(name="clientDeliveryAddress", columns={"clientDeliveryAddress"})})
  * @ORM\Entity
  */
 class Orders
@@ -26,21 +26,21 @@ class Orders
      *
      * @ORM\Column(name="createdAt", type="datetime", nullable=true, options={"default"="NULL"})
      */
-    private $createdat = 'NULL';
+    private $createdat;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="updatedAt", type="datetime", nullable=true, options={"default"="NULL"})
      */
-    private $updatedat = 'NULL';
+    private $updatedat;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="status", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $status = 'NULL';
+    private $status;
 
     /**
      * @var \Client

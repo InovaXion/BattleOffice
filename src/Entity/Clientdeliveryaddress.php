@@ -66,9 +66,9 @@ class Clientdeliveryaddress
     /**
      * @var string
      *
-     * @ORM\Column(name="coutnry", type="string", length=255, nullable=false)
+     * @ORM\Column(name="country", type="string", length=255, nullable=false)
      */
-    private $coutnry;
+    private $country;
 
     /**
      * @var string
@@ -82,14 +82,14 @@ class Clientdeliveryaddress
      *
      * @ORM\Column(name="createdAt", type="datetime", nullable=true, options={"default"="NULL"})
      */
-    private $createdat = 'NULL';
+    private $createdat;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="updatedAt", type="datetime", nullable=true, options={"default"="NULL"})
      */
-    private $updatedat = 'NULL';
+    private $updatedat;
 
     /**
      * @var \Client
@@ -178,14 +178,14 @@ class Clientdeliveryaddress
         return $this;
     }
 
-    public function getCoutnry(): ?string
+    public function getCountry(): ?string
     {
-        return $this->coutnry;
+        return $this->country;
     }
 
-    public function setCoutnry(string $coutnry): self
+    public function setCountry(string $country): self
     {
-        $this->coutnry = $coutnry;
+        $this->country = $country;
 
         return $this;
     }
