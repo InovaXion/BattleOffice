@@ -6,6 +6,10 @@ use App\Entity\Order;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Form\ClientType;
+use App\Form\AddressType;
+
+
 
 class OrderType extends AbstractType
 {
@@ -16,9 +20,10 @@ class OrderType extends AbstractType
             ->add('payment_method')
             ->add('status')
             ->add('addresses')
-            ->add('client')
-            ->add('addresses_billing')
-            ->add('addresses_shipping')
+            ->add('client', ClientType::class)
+            ->add('addresses_billing', AddressType::class)
+            ->add('addresses_shipping', AddressType::class)
+
         ;
     }
 
