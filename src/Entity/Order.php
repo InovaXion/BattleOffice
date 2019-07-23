@@ -38,11 +38,6 @@ class Order
     private $client;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $addresses;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Address")
      */
     private $addresses_billing;
@@ -102,18 +97,6 @@ class Order
     public function setClient(?Client $client): self
     {
         $this->client = $client;
-
-        return $this;
-    }
-
-    public function getAddresses(): ?string
-    {
-        return $this->addresses;
-    }
-
-    public function setAddresses(string $addresses): self
-    {
-        $this->addresses = $addresses;
 
         return $this;
     }
