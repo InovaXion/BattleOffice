@@ -2,101 +2,46 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Client
- *
- * @ORM\Table(name="client")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
  */
 class Client
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="firstName", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
     private $firstname;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="lastName", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
     private $lastname;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="address", type="string", length=255, nullable=false)
-     */
-    private $address;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="addressMore", type="string", length=255, nullable=false)
-     */
-    private $addressmore;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="city", type="string", length=255, nullable=false)
-     */
-    private $city;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="postalCode", type="string", length=255, nullable=false)
-     */
-    private $postalcode;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="country", type="string", length=255, nullable=false)
-     */
-    private $country;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="phoneNumber", type="string", length=255, nullable=false)
-     */
-    private $phonenumber;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
     private $email;
 
     /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="createdAt", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="client")
      */
-    private $createdat;
+    private $orders;
 
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="apdatedAt", type="datetime", nullable=true, options={"default"="NULL"})
-     */
-    private $apdatedat;
+    public function __construct()
+    {
+        $this->orders = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -127,78 +72,6 @@ class Client
         return $this;
     }
 
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
-
-    public function setAddress(string $address): self
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    public function getAddressmore(): ?string
-    {
-        return $this->addressmore;
-    }
-
-    public function setAddressmore(string $addressmore): self
-    {
-        $this->addressmore = $addressmore;
-
-        return $this;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): self
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function getPostalcode(): ?string
-    {
-        return $this->postalcode;
-    }
-
-    public function setPostalcode(string $postalcode): self
-    {
-        $this->postalcode = $postalcode;
-
-        return $this;
-    }
-
-    public function getCountry(): ?string
-    {
-        return $this->country;
-    }
-
-    public function setCountry(string $country): self
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    public function getPhonenumber(): ?string
-    {
-        return $this->phonenumber;
-    }
-
-    public function setPhonenumber(string $phonenumber): self
-    {
-        $this->phonenumber = $phonenumber;
-
-        return $this;
-    }
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -211,29 +84,34 @@ class Client
         return $this;
     }
 
-    public function getCreatedat(): ?\DateTimeInterface
+    /**
+     * @return Collection|Order[]
+     */
+    public function getOrders(): Collection
     {
-        return $this->createdat;
+        return $this->orders;
     }
 
-    public function setCreatedat(?\DateTimeInterface $createdat): self
+    public function addOrder(Order $order): self
     {
-        $this->createdat = $createdat;
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+            $order->setClient($this);
+        }
 
         return $this;
     }
 
-    public function getApdatedat(): ?\DateTimeInterface
+    public function removeOrder(Order $order): self
     {
-        return $this->apdatedat;
-    }
-
-    public function setApdatedat(?\DateTimeInterface $apdatedat): self
-    {
-        $this->apdatedat = $apdatedat;
+        if ($this->orders->contains($order)) {
+            $this->orders->removeElement($order);
+            // set the owning side to null (unless already changed)
+            if ($order->getClient() === $this) {
+                $order->setClient(null);
+            }
+        }
 
         return $this;
     }
-
-
 }

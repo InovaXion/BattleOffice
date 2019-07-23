@@ -52,7 +52,7 @@ class LandingPageController extends Controller
 
         $form = $this->createForm(OrderType::class);
         $form->handleRequest($request);
-
+        
        if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($client, $clientAddress, $product, $order);
