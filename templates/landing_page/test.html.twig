@@ -3,7 +3,7 @@
 {% block title %}{% endblock %}
 
 {% block body %}
- <form method="post">
+{{form_start (form)}}
         <div class="container">
             <div class="row">
                 <div class="content col s12 m12 l8">
@@ -256,54 +256,52 @@
         <p class="h6 center-align">Remplissez ce formulaire</p>
         <div class="form-wrapper">
             <div class="input-field">
-                <input type="text" name="client[firstname]">
+               {{form_row (form.order.client.username)}}
                 <label>Prénom</label>
                 <div class="form-error"></div>
             </div>
             <div class="input-field">
-                <input type="text" name="client[lastName]" >
+               {{form_row (form.order.client.lastname)}}
                 <label>Nom</label>
                 <div class="form-error"></div>
             </div>
             <div class="input-field">
-                <input type="text">
+                {{form_row (form.order.addresses_billing.address_line1)}}
                 <label>Adresse</label>
                 <div class="form-error"></div>
             </div>
             <div class="input-field">
-                <input type="text">
+                 {{form_row (form.order.addresses_billing.address_line2)}}
                 <label>Complément adr.</label>
                 <div class="form-error"></div>
             </div>
             <div class="input-field">
-                <input type="text">
+                 {{form_row (form.order.addresses_billing.city)}}
                 <label>Ville</label>
                 <div class="form-error"></div>
             </div>
             <div class="input-field">
-                <input type="text">
+                 {{form_row (form.order.addresses_billing.zipcode)}}
                 <label>Code postal</label>
                 <div class="form-error"></div>
             </div>
             <div class="input-field">
-                <select>
-                    <option>France</option>
-                </select>
+                 {{form_row (form.order.addresses_billing.country)}}
                 <label>Pays</label>
                 <div class="form-error"></div>
             </div>
             <div class="input-field">
-                <input type="text">
+                 {{form_row (form.order.addresses_billing.phone)}}
                 <label>Téléphone</label>
                 <div class="form-error"></div>
             </div>
             <div class="input-field">
-                <input type="text">
+                 {{form_row (form.order.client.email)}}
                 <label>Email</label>
                 <div class="form-error"></div>
             </div>
             <div class="input-field">
-                <input type="text">
+                <input type="text" name="confirmEmail">
                 <label>Confirmation email</label>
                 <div class="form-error"></div>
             </div>
@@ -323,35 +321,33 @@
                     <label>Nom</label>
                     <div class="form-error"></div>
                 </div>
-                <div class="input-field">
-                    <input type="text">
+                <div class="input-field">               
+                 {{form_row (form.order.addresses_shipping.address_line1)}}
                     <label>Adresse</label>
                     <div class="form-error"></div>
                 </div>
                 <div class="input-field">
-                    <input type="text">
+                 {{form_row (form.order.addresses_shipping.address_line2)}}
                     <label>Complément adr.</label>
                     <div class="form-error"></div>
                 </div>
                 <div class="input-field">
-                    <input type="text">
+                 {{form_row (form.order.addresses_shipping.city)}}
                     <label>Ville</label>
                     <div class="form-error"></div>
                 </div>
                 <div class="input-field">
-                    <input type="text">
+                 {{form_row (form.order.addresses_shipping.zipcode)}}
                     <label>Code postal</label>
                     <div class="form-error"></div>
                 </div>
                 <div class="input-field">
-                    <select>
-                        <option>France</option>
-                    </select>
+                {{form_row (form.order.addresses_shipping.country)}}
                     <label>Pays</label>
                     <div class="form-error"></div>
                 </div>
                 <div class="input-field">
-                    <input type="text">
+                {{form_row (form.order.addresses_shipping.phone)}}
                     <label>Téléphone</label>
                     <div class="form-error"></div>
                 </div>
@@ -410,5 +406,5 @@
                 </aside>
             </div>
         </div>
-    </form>
+    {{form_end (form)}}
 {% endblock %}

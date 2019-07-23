@@ -6,6 +6,7 @@ use App\Entity\Address;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class AddressType extends AbstractType
 {
@@ -16,7 +17,14 @@ class AddressType extends AbstractType
             ->add('address_line2')
             ->add('city')
             ->add('zipcode')
-            ->add('country')
+            ->add('country', ChoiceType::Class, [
+                'choices' => [
+                    'France' => 'France',
+                    'Belgique' => 'Belgique',
+                    'Luxembourg' => 'Luxembourg'
+
+                ],
+            ])
             ->add('phone')
         ;
     }
