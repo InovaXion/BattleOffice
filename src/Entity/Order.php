@@ -32,18 +32,18 @@ class Order
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="orders",cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $client;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Address")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Address",cascade={"persist"})
      */
     private $addresses_billing;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Address")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Address",cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $addresses_shipping;

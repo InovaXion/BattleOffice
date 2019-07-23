@@ -19,7 +19,6 @@ class OrderType extends AbstractType
             ->add('product')
             ->add('payment_method')
             ->add('status')
-            ->add('addresses')
             ->add('client', ClientType::class)
             ->add('addresses_billing', AddressType::class)
             ->add('addresses_shipping', AddressType::class)

@@ -42,16 +42,13 @@ class LandingPageController extends Controller
 
 
         $order = new Order;
-        $addres_billing = new Address;
-        $address_shipping = new Address;
-        $client = new Client;
 
-        $form = $this->createForm(OrderType::class);
+        $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($client, $addres_billing, $address_shipping, $order);
+            $entityManager->persist($order);
             $entityManager->flush();
 
             return $this->redirectToRoute('confirmation');
