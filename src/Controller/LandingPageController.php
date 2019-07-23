@@ -3,12 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Client;
-use App\Entity\Orders;
-use App\Entity\Product;
+use App\Entity\Order;
+use App\Entity\Address;
 use App\Form\OrderType;
 use App\Manager\OrderManager;
 use Symfony\Component\Form\Form;
-use App\Entity\Clientdeliveryaddress;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,18 +23,14 @@ class LandingPageController extends Controller
     {
         //Your code here
 
-        return $this->render('landing_page/index_new.html.twig', [
-
-        ]);
+        return $this->render('landing_page/index_new.html.twig', []);
     }
     /**
      * @Route("/confirmation", name="confirmation")
      */
     public function confirmation()
     {
-        return $this->render('landing_page/confirmation.html.twig', [
-
-        ]);
+        return $this->render('landing_page/confirmation.html.twig', []);
     }
 
 
@@ -44,29 +39,27 @@ class LandingPageController extends Controller
      */
     public function new(Request $request): Response
     {
-       $client = New Client;
-       $clientAddress = New Clientdeliveryaddress;
-       $order = New Orders;
-       $product = New Product;
 
+
+        $order = new Order;
+        $addres_billing = new Address;
+        $address_shipping = new Address;
+        $client = new Client;
 
         $form = $this->createForm(OrderType::class);
         $form->handleRequest($request);
-        
-       if ($form->isSubmitted() && $form->isValid()) {
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($client, $clientAddress, $product, $order);
+            $entityManager->persist($client, $addres_billing, $address_shipping, $order);
             $entityManager->flush();
 
             return $this->redirectToRoute('confirmation');
-        } 
+        }
 
         return $this->render('landing_page/test.html.twig', [
-           
+
             'form' => $form->createView(),
         ]);
-    
-}
-
-
+    }
 }
