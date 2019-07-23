@@ -34,13 +34,13 @@ class Client
     private $email;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="client")
+     * @ORM\OneToMany(targetEntity="App\Entity\Orders", mappedBy="client")
      */
-    private $orders;
+    private $order;
 
     public function __construct()
     {
-        $this->orders = new ArrayCollection();
+        $this->order = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -87,15 +87,15 @@ class Client
     /**
      * @return Collection|Order[]
      */
-    public function getOrders(): Collection
+    public function getOrder(): Collection
     {
-        return $this->orders;
+        return $this->order;
     }
 
     public function addOrder(Order $order): self
     {
-        if (!$this->orders->contains($order)) {
-            $this->orders[] = $order;
+        if (!$this->order->contains($order)) {
+            $this->order[] = $order;
             $order->setClient($this);
         }
 
@@ -104,8 +104,8 @@ class Client
 
     public function removeOrder(Order $order): self
     {
-        if ($this->orders->contains($order)) {
-            $this->orders->removeElement($order);
+        if ($this->order->contains($order)) {
+            $this->order->removeElement($order);
             // set the owning side to null (unless already changed)
             if ($order->getClient() === $this) {
                 $order->setClient(null);

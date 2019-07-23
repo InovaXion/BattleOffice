@@ -25,7 +25,7 @@
             </div>
         </div>
     </section>
-    <form method="post">
+   {{form_start (form)}}
         <div class="container">
             <div class="row">
                 <div class="content col s12 m12 l8">
@@ -290,5 +290,9 @@
                 </aside>
             </div>
         </div>
-    </form>
+         <input type="hidden" name="order[status]" value="WAITING" type="text">
+{% do form.product.setRendered() %}
+{% do form.payment_method.setRendered() %}
+{% do form.status.setRendered() %}
+      {{form_end (form)}}
 {% endblock %}
