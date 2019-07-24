@@ -75,7 +75,7 @@ class LandingPageController extends Controller
 
     $order->setorderapi($orderapijson->order_id);
     $entityManager->flush();
-    
+
     // Set le Prix de la commande
     if ($order->getProduct() == "1 Nerf Elite Rapid Strike")
     {
@@ -86,13 +86,13 @@ class LandingPageController extends Controller
     } else {
         $amount = 6490;
     }
-      dd($amount);
                         
-            return $this->redirectToRoute('payment', [
+            return $this->redirectToRoute('payement', [
                 'orderapiid' => $order->getOrderapi(),
                 'amount' => $amount
             ]);
         }
+
 
         return $this->render('landing_page/test.html.twig', [
 
@@ -107,14 +107,34 @@ class LandingPageController extends Controller
         return $this->render('landing_page/confirmation.html.twig', []);
     }
     /**
-     * @Route("/payment", name="payment")
+     * @Route("/payment", name="payement")
      */
     public function payment(Request $request)
     {
-         return $this->render('landing_page/confirmation.html.twig', []);
+         return $this->render('landing_page/payement.html.twig', []);
     }
 
+    /**
+     * @Route("/stripe", name="stripe")
+     */
+    public function stripe(Request $request):Response
+    {
+         // Set your secret key: remember to change this to your live secret key in production
+        // See your keys here: https://dashboard.stripe.com/account/apikeys
+        \Stripe\Stripe::setApiKey('sk_test_9woza1rc2Y1XDxCvsds7AskG00MAqnNBRc');
 
+        // Token is created using Checkout or Elements!
+        // Get the payment token ID submitted by the form:
+        $token = $_POST['stripeToken'];
+        $charge = \Stripe\Charge::create([
+            'amount' => 3900,
+            'currency' => 'eur',
+            'description' => 'BattleOffice',
+            'source' => $token,
+        ]);
+
+        return $this->redirectToRoute('confirmation');
+    }
 
 
     // /**
