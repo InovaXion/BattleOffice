@@ -70,11 +70,28 @@ class LandingPageController extends Controller
                   ]
           ]
       ]);
-      
-      dd($response->getBody()->getContents());
 
+    $orderapijson = json_decode($response->getBody()->getContents());
 
-            return $this->redirectToRoute('payment');
+    $order->setorderapi($orderapijson->order_id);
+    $entityManager->flush();
+    
+    // Set le Prix de la commande
+    if ($order->getProduct() == "1 Nerf Elite Rapid Strike")
+    {
+        $amount = 3990;
+    } else if ($order->getProduct() == "4 Nerf Elite Disruptor")
+    {
+        $amount = 5190;
+    } else {
+        $amount = 6490;
+    }
+      dd($amount);
+                        
+            return $this->redirectToRoute('payment', [
+                'orderapiid' => $order->getOrderapi(),
+                'amount' => $amount
+            ]);
         }
 
         return $this->render('landing_page/test.html.twig', [

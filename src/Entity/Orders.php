@@ -48,6 +48,11 @@ class Orders
      */
     private $addresses_shipping;
 
+     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $orderapi;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +126,18 @@ class Orders
     public function setAddressesShipping(?Address $addresses_shipping): self
     {
         $this->addresses_shipping = $addresses_shipping;
+
+        return $this;
+    }
+
+    public function getOrderapi() :?string
+    {
+        return $this->orderapi;
+    }
+
+    public function setOrderapi(string $orderapi):self
+    {
+        $this->orderapi = $orderapi;
 
         return $this;
     }
