@@ -28,6 +28,7 @@ class LandingPageController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($order);
 
@@ -35,11 +36,12 @@ class LandingPageController extends Controller
             // n'est pas renseigné
             $adressBilling = $order->getAddressesBilling();
             $adressShipping = $order->getAddressesShipping();
+            
             if (!$adressShipping)
             {
                 $order->setAddressesShipping($adressBilling);
             }
-
+            
             $entityManager->flush();
 
             $client = new ClientsGuzzle([
@@ -97,7 +99,7 @@ class LandingPageController extends Controller
         $amount = 6490;
     }
                         
-            return $this->redirectToRoute('payement', [
+    return $this->render('landing_page/payement.html.twig', [
                 'orderapiid' => $order->getOrderapi(),
                 'amount' => $amount
             ]);
@@ -125,7 +127,7 @@ class LandingPageController extends Controller
     }
 
     /**
-     * @Route("/stripe", name="stripe")
+     * @Route("/confirmation", name="stripe")
      */
     public function stripe(Request $request):Response
     {
@@ -136,14 +138,19 @@ class LandingPageController extends Controller
         // Token is created using Checkout or Elements!
         // Get the payment token ID submitted by the form:
         $token = $_POST['stripeToken'];
+        $amount = $_POST['amount'];
+        $orderapiid = $_POST['orderapiid'];
         $charge = \Stripe\Charge::create([
-            'amount' => 3900,
+            'amount' => $amount,
             'currency' => 'eur',
             'description' => 'BattleOffice',
             'source' => $token,
         ]);
 
-        return $this->redirectToRoute('confirmation');
+        return $this->render('landing_page/confirmation.html.twig', [
+            'orderapiid' => $orderapiid,
+            'amount' => $amount
+        ]);
     }
 
 

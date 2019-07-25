@@ -19,6 +19,7 @@ class AddressType extends AbstractType
             ->add('zipcode')
             ->add('country', ChoiceType::Class, [
                 'choices' => [
+                    '' => '',
                     'France' => 'France',
                     'Belgique' => 'Belgique',
                     'Luxembourg' => 'Luxembourg'
@@ -27,6 +28,8 @@ class AddressType extends AbstractType
             ])
             ->add('phone')
         ;
+
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
