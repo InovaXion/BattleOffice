@@ -21,7 +21,7 @@ class OrderType extends AbstractType
             ->add('status')
             ->add('client', ClientType::class)
             ->add('addresses_billing', AddressType::class)
-            ->add('addresses_shipping', AddressType::class)
+            ->add('addresses_shipping', AddressType::class, ['required' => false])
 
         ;
     }

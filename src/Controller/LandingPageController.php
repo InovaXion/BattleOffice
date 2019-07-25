@@ -30,6 +30,16 @@ class LandingPageController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($order);
+
+            // Vérifie et set l'adresse de livraison par l'adresse de facturation si l'adresse de livraison
+            // n'est pas renseigné
+            $adressBilling = $order->getAddressesBilling();
+            $adressShipping = $order->getAddressesShipping();
+            if (!$adressShipping)
+            {
+                $order->setAddressesShipping($adressBilling);
+            }
+
             $entityManager->flush();
 
             $client = new ClientsGuzzle([
