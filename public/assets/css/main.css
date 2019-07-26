@@ -8442,3 +8442,7 @@ input:focus:not([readonly]) + label {
 .StripeElement--webkit-autofill {
   background-color: #fefde5 !important;
 }
+
+.input-field li {
+  color: red;
+}
