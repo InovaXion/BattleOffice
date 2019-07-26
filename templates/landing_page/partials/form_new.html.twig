@@ -50,7 +50,7 @@
                 <div class="form-error"></div>
             </div>
             <div class="input-field">
-                 {{form_row (form.addresses_billing.country)}}
+                 {{form_row (form.addresses_billing.country, {'value' : 'France'})}}
                 <div class="form-error"></div>
             </div>
             <div class="input-field">
@@ -58,12 +58,11 @@
                 <div class="form-error"></div>
             </div>
             <div class="input-field">
-                 {{form_row (form.client.email)}}
+                 {{form_row (form.client.email.first)}}
                 <div class="form-error"></div>
             </div>
             <div class="input-field">
-                <input type="text" name="confirmEmail">
-                <label>Confirmation email</label>
+              {{form_row (form.client.email.second)}}
                 <div class="form-error"></div>
             </div>
         </div>
@@ -99,7 +98,7 @@
                     <div class="form-error"></div>
                 </div>
                 <div class="input-field">
-                {{form_row (form.addresses_shipping.country)}}
+                {{form_row (form.addresses_shipping.country, {'value' : ''})}}
                     <div class="form-error"></div>
                 </div>
                 <div class="input-field">
