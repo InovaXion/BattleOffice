@@ -51,9 +51,16 @@ class Address
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('phone', new Assert\Length([
-            'min' => 10,
-            'max' => 15,
-            'exactMessage' => 'Votre numéro de téléphone doit faire au minimum 10 caractères',
+            'min' => 10
+        ]));
+        $metadata->addPropertyConstraint('zipcode', new Assert\Length([
+            'min' => 4,
+            'max' => 10,
+            'exactMessage' => 'Votre code postal est invalide',
+        ]));  
+        $metadata->addPropertyConstraint('zipcode', new Assert\Type([
+            'type' => 'integer',
+            'message' => 'Le code postal doit être un nombre.',
         ]));
     }
 
