@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -44,7 +45,17 @@ class Address
     /**
      * @ORM\Column(type="string", length=255)
      */
+    
     private $phone;
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('phone', new Assert\Length([
+            'min' => 10,
+            'max' => 15,
+            'exactMessage' => 'Votre numéro de téléphone doit faire au minimum 10 caractères',
+        ]));
+    }
 
     public function getId(): ?int
     {

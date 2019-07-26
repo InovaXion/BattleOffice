@@ -48,7 +48,6 @@ class LandingPageController extends Controller
                 'base_uri' => 'https://api-commerce.simplon-roanne.com/',
                 'headers' => ['Authorization' => 'Bearer mJxTXVXMfRzLg6ZdhUhM4F6Eutcm1ZiPk4fNmvBMxyNR4ciRsc8v0hOmlzA0vTaX']
                 ]);
-
             $response = $client->request('POST', '/order', [
                 'json'    => [
                     "order"=> [
@@ -106,18 +105,11 @@ class LandingPageController extends Controller
         }
 
 
-        return $this->render('landing_page/test.html.twig', [
-
+        return $this->render('landing_page/index_new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
-    /**
-     * @Route("/confirmation", name="confirmation")
-     */
-    public function confirmation()
-    {
-        return $this->render('landing_page/confirmation.html.twig', []);
-    }
+   
     /**
      * @Route("/payment", name="payement")
      */
@@ -140,6 +132,14 @@ class LandingPageController extends Controller
         $token = $_POST['stripeToken'];
         $amount = $_POST['amount'];
         $orderapiid = $_POST['orderapiid'];
+        $repo = $this->getDoctrine()->getRepository(Orders::class);
+
+        $order = $repo->findOneBy([
+            'orderapi' => $orderapiid,
+        ]);
+
+
+           
         $charge = \Stripe\Charge::create([
             'amount' => $amount,
             'currency' => 'eur',
@@ -147,36 +147,25 @@ class LandingPageController extends Controller
             'source' => $token,
         ]);
 
+
+        $client = new ClientsGuzzle([
+            'base_uri' => 'https://api-commerce.simplon-roanne.com/',
+            'headers' => ['Authorization' => 'Bearer mJxTXVXMfRzLg6ZdhUhM4F6Eutcm1ZiPk4fNmvBMxyNR4ciRsc8v0hOmlzA0vTaX']
+            ]);
+        $response = $client->request('POST', '/order/' . $orderapiid . '/status', [
+            'json'    => [
+                'status' => 'PAID',
+            ]
+            
+            ]);
+
+        $order->setStatus('PAID');
+                
+            
+
         return $this->render('landing_page/confirmation.html.twig', [
             'orderapiid' => $orderapiid,
             'amount' => $amount
         ]);
     }
-
-
-    // /**
-    //  * @Route("/", name="OrderType_new", methods={"GET","POST"})
-    //  */
-    // public function new(Request $request): Response
-    // {
-
-
-    //     $order = new Orders;
-
-    //     $form = $this->createForm(OrderType::class, $order);
-    //     $form->handleRequest($request);
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $entityManager = $this->getDoctrine()->getManager();
-    //         $entityManager->persist($order);
-    //         $entityManager->flush();
-
-    //         return $this->redirectToRoute('payment');
-    //     }
-
-    //     return $this->render('landing_page/test.html.twig', [
-
-    //         'form' => $form->createView(),
-    //     ]);
-    // }
 }

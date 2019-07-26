@@ -32,17 +32,6 @@ class Client
      * @ORM\Column(type="string", length=255)
      */
     private $email;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Orders", mappedBy="client")
-     */
-    private $order;
-
-    public function __construct()
-    {
-        $this->order = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -80,37 +69,6 @@ class Client
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Order[]
-     */
-    public function getOrder(): Collection
-    {
-        return $this->order;
-    }
-
-    public function addOrder(Order $order): self
-    {
-        if (!$this->order->contains($order)) {
-            $this->order[] = $order;
-            $order->setClient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrder(Order $order): self
-    {
-        if ($this->order->contains($order)) {
-            $this->order->removeElement($order);
-            // set the owning side to null (unless already changed)
-            if ($order->getClient() === $this) {
-                $order->setClient(null);
-            }
-        }
 
         return $this;
     }
