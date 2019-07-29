@@ -32,7 +32,7 @@ class Orders
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="orders",cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client",cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $client;

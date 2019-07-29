@@ -46,7 +46,7 @@ class LandingPageController extends Controller
 
             $client = new ClientsGuzzle([
                 'base_uri' => 'https://api-commerce.simplon-roanne.com/',
-                'headers' => ['Authorization' => 'Bearer mJxTXVXMfRzLg6ZdhUhM4F6Eutcm1ZiPk4fNmvBMxyNR4ciRsc8v0hOmlzA0vTaX']
+                'headers' => ['Authorization' => 'Bearer mJxTXVXMfRzLg6ZdhUhM4F6Eutcm1ZiPk4fNmvBMxyNR4ciRsc8v0hOmlzA0vTaX', 'user-agent' => 'Céline et Mathis']
                 ]);
             $response = $client->request('POST', '/order', [
                 'json'    => [
@@ -160,7 +160,9 @@ class LandingPageController extends Controller
             ]);
 
         $order->setStatus('PAID');
-                
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($order);
+        $entityManager->flush();
             
 
         return $this->render('landing_page/confirmation.html.twig', [

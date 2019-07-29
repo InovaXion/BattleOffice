@@ -51,7 +51,7 @@ class Address
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('phone', new Assert\Length([
-            'min' => 10
+            'min' => 9
         ]));
         $metadata->addPropertyConstraint('zipcode', new Assert\Length([
             'min' => 4,
